@@ -21,27 +21,61 @@
 
     <link name="chassis">
         <visual>
+            <!-- box origin -->
             <origin xyz="0.33 0 0.1405" />
+            <!-- stl origin -->
+            <!--origin xyz="0.125 0 0" /-->
             <geometry>
-                <box size="0.66 0.548 0.281" />
-                <!-- importing the mesh didn't work... -->
-                <!-- mesh filename="package://bunker_mini/description/bunker_mini.stl" /-->
+                <box size="0.66 0.61 0.281" />
+                <!-- importing a mesh of the bunker mini robot -->
+                <!--mesh filename="package://bunker_mini/description/bunker_mini.stl"/-->
             </geometry>
             <material name="white" />
         </visual>
         <collision>
             <origin xyz="0.33 0 0.1405" />
             <geometry>
-                <box size="0.66 0.548 0.281" />
+                <box size="0.66 0.61 0.281" />
             </geometry>
         </collision>
-        <xacro:inertial_box mass="2" x="0.66" y="0.548" z="0.281">
+        <xacro:inertial_box mass="2" x="0.66" y="0.61" z="0.281">
             <origin xyz="0.33 0 0.1405" rpy="0 0 0" />
         </xacro:inertial_box>
     </link>
 
     <gazebo reference="chassis">
         <material>Gazebo/White</material>
+    </gazebo>
+
+    <joint name="front_diamond_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="front_diamond" />
+        <origin xyz="-0.33 0 0" />
+
+    </joint>
+
+    <link name="front_diamond">
+        <visual>
+            <!-- front diamond origin -->
+            <origin xyz="0.6 0 0.28" rpy="0 0 ${pi/4}" />
+            <geometry>
+                <box size="0.03 0.03 0.02" />
+            </geometry>
+            <material name="blue" />
+        </visual>
+        <collision>
+            <origin xyz="0.6 0 0.28" rpy="0 0 ${pi/4}" />
+            <geometry>
+                <box size="0.03 0.03 0.02" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.1" x="0.03" y="0.03" z="0.02">
+            <origin xyz="0.52 0 0.28" rpy="0 0 ${pi/4}" />
+        </xacro:inertial_box>
+    </link>
+
+    <gazebo reference="front_diamond">
+        <material>Gazebo/Blue</material>
     </gazebo>
 
     <!-- LEFT WHEEL LINK -->

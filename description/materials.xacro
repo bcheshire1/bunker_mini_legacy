@@ -17,6 +17,10 @@
         <color rgba="0 0 0 1" />
     </material>
 
+    <material name="red">
+        <color rgba="1 0 0 1" />
+    </material>
+
     <material name="transparent">
         <color rgba="0 0 0 0" />
     </material>

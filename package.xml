@@ -3,7 +3,7 @@
 <package format="3">
   <name>bunker_mini</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Package to control and run the Agilex Bunker Mini robot</description>
   <maintainer email="b.cheshire1@lancaster.ac.uk">BEN CHESHIRE</maintainer>
   <license>TODO: License declaration</license>
 
