@@ -15,9 +15,8 @@ def generate_launch_description():
 
 
     # Include the robot_state_publisher launch file, provided by our own package. Force sim time to be enabled
-    # !!! MAKE SURE YOU SET THE PACKAGE NAME CORRECTLY !!!
 
-    package_name='bunker_mini' #<--- CHANGE ME
+    package_name='bunker_mini'
 
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -37,6 +36,13 @@ def generate_launch_description():
                                    '-entity', 'bunker_mini'],
                         output='screen')
 
+    rviz2 = Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d', 'src/bunker_mini/config/drive_bot.rviz'],
+            # parameters=[{'use_sim_time': 'false'}],
+            output='screen')
 
 
     # Launch them all!
@@ -44,4 +50,5 @@ def generate_launch_description():
         rsp,
         gazebo,
         spawn_entity,
+        rviz2,
     ])
