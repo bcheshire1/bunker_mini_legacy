@@ -1,7 +1,7 @@
 import os
 
 from ament_index_python.packages import get_package_share_directory
-
+from launch.substitutions import LaunchConfiguration
 
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
@@ -13,7 +13,13 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    map_dir = LaunchConfiguration(
+        'map',
+        default=os.path.join(
+            get_package_share_directory('bunker_mini'),
+            'obstacles',
+            'obstacles.yaml'))
     # Include the robot_state_publisher launch file, provided by our own package. Force sim time to be enabled
 
     package_name='bunker_mini'
@@ -40,8 +46,8 @@ def generate_launch_description():
             package='rviz2',
             executable='rviz2',
             name='rviz2',
-            arguments=['-d', 'src/bunker_mini/config/drive_bot.rviz'],
-            # parameters=[{'use_sim_time': 'false'}],
+            arguments=['-d', 'src/bunker_mini/config/rviz_slam_config.rviz'],
+            parameters=[{'use_sim_time': use_sim_time}],
             output='screen')
 
 
