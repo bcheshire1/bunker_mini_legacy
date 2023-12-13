@@ -11,9 +11,9 @@
     <link name="gm_frame">
         <visual>
             <geometry>
-                <cylinder radius="0.038" length="0.041" />
+                <cylinder radius="0.0151" length="0.0492" />
             </geometry>
-            <material name="red" />
+            <material name="orange" />
         </visual>
         <collision>
             <geometry>
