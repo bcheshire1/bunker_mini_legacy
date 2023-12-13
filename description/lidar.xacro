@@ -54,7 +54,7 @@
                 <frame_name>laser_frame</frame_name>
             </plugin>
         </sensor>
-        <material>Gazebo/Red</material>
+        <material>Gazebo/Orange</material>
     </gazebo>
 
 </robot>
