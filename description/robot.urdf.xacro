@@ -7,4 +7,6 @@
 
     <xacro:include filename="lidar.xacro" />
 
+    <xacro:include filename="lnd712.xacro" />
+
 </robot>
