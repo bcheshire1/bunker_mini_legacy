@@ -1,0 +1,11 @@
+<class_libraries>
+  <!--  Format of library path = "lib/libNAMEOFCPPFILEORHEADERFILE"-->
+  <!-- Infact, this may be the add_library(NAME src/filename.cpp) NAME in CMakeLists.txt -->
+  <library path="lib/librad_layer"> 
+  <!-- Format of class type = "LAYERNAMESPACE::LAYERTYPENAME" in accordance with the PLUGINLIB_EXPORT_CLASS declaration -->
+    <class type="radiation_layer_namespace::RadLayer" base_class_type="costmap_2d::Layer">
+    <!-- Nice Description ^_^ -->
+      <description>Interprets and interpolates ionising radiation dose rate into spatially resolved costmap layer</description>
+    </class>
+  </library>
+  </class_libraries>

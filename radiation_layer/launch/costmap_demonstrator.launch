@@ -1,0 +1,42 @@
+<launch>
+<!-- Set variables for filenames -->
+
+  <!-- Costmap yaml files -->
+  <arg name="global_costmap_yaml" default="$(find radiation_layer)/launch/yaml/global_demonstration.yaml"/>
+  <arg name="local_costmap_yaml" default="$(find radiation_layer)/launch/yaml/local_demonstration.yaml"/>
+
+  <!-- RVIZ config file -->
+  <arg name="rviz_config" default="$(find radiation_layer)/rviz/costmap_demo.rviz"/>
+
+
+
+<!-- Play radiation sensor data -->
+
+  <node name="radiation_mimic" pkg="radiation_layer" type="radiation_wanderer.py" output="screen"/>
+
+
+<!-- launch costmap_2d nodes independently, usually this would be part of move_base -->
+
+
+  <node name="global_costmap_2d" pkg="costmap_2d" type="costmap_2d_node" output="screen">
+    <rosparam file="$(arg global_costmap_yaml)" command="load" ns="costmap" />
+    <!-- thresholds can be changed via dynamic reconfigure, written in yaml, or launch file -->
+    <rosparam ns="costmap/radiation">
+      upper_threshold: 999.0
+      lower_threshold: 100.0
+    </rosparam>
+  </node>
+
+  <node name="local_costmap_2d" pkg="costmap_2d" type="costmap_2d_node" output="screen">
+    <rosparam file="$(arg local_costmap_yaml)" command="load" ns="costmap" />
+  </node>
+
+<!-- RVIZ for visualisation -->
+
+  <node name="rviz" type="rviz" pkg="rviz" args="-d $(arg rviz_config)" />
+
+<!-- Dynamic Reconfigure -->
+
+  <node name="dynamic_reconfigure" type="rqt_reconfigure" pkg="rqt_reconfigure"/>
+
+</launch>
