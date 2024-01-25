@@ -53,7 +53,6 @@ class Geigercounter (threading.Thread):
         else:
             self.entropygenerator = None
 
-
         self.reset()
         self.start()
 
@@ -139,6 +138,5 @@ class Geigercounter (threading.Thread):
                     "edr": self.edr
                 },
                 "annotation": ""
-
             }
         return msg
