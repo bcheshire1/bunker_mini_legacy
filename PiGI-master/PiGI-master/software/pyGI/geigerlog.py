@@ -226,4 +226,4 @@ def dummy_entry(timestamp,total,total_dtc):
 
 
 if __name__ == "__main__":
-    print get_last_totalcount()
+    print (get_last_totalcount())
