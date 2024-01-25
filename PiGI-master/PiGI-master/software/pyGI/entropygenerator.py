@@ -49,7 +49,7 @@ class EntropyGenerator(threading.Thread):
             elif d0 < d1:
                 self.bitstring += "0" if self.toggle else "1"
             else: #d0 = d1
-                print "Collision"
+                print ("Collision")
 
             self.toggle = not self.toggle
 
