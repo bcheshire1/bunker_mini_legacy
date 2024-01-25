@@ -9,7 +9,7 @@ try:
     import RPi.GPIO as GPIO
     geiger_simulate = False
 except ImportError:
-    print "Simulating"
+    print ("Simulating")
     geiger_simulate = True
     
 GPIO_PIGI = 4
@@ -36,7 +36,7 @@ class GeigerCounter():
     
     def tick (self,pin=0):
         self.tick_counter += 1
-        print "Ticks: %d"%self.tick_counter
+        print ("Ticks: %d"%self.tick_counter)
 
 
 if __name__ == "__main__":
