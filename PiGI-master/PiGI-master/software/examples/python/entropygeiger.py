@@ -40,7 +40,7 @@ class EntropyGeigerCounter(geiger.GeigerCounter):
             elif d0 < d1:
                 self.bitstring += "0" if self.toggle else "1"
             else: #d0 = d1
-                print "Collision"
+                print ("Collision")
 
             self.toggle = not self.toggle
 
@@ -56,8 +56,8 @@ class EntropyGeigerCounter(geiger.GeigerCounter):
                 byte_int = int(byte_bin,2)
                 byte_hex = hex(byte_int)
                 byte_chr = chr(byte_int)
-                print "%s  %3d %4s %s"%(byte_bin,byte_int,
-                                        byte_hex,byte_chr)
+                print ("%s  %3d %4s %s"%(byte_bin,byte_int,
+                                        byte_hex,byte_chr))
                 f.write(byte_chr)
 
 
