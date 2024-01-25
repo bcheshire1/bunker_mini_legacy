@@ -6,13 +6,13 @@ import time
 log = logging.getLogger(__name__)
 
 class EntropyGenerator(threading.Thread):
-    def __init__(self,outfile):
+    def __init__(self, outfile):
         self.outfile = outfile
         
         threading.Thread.__init__(self)
         self.daemon = True
        
-        #setup vars for randomness production
+        # setup vars for randomness production
         self.tick_counter = 0
         self.toggle = False
         self.t0 = self.t1 = self.t2 = datetime.datetime.now()
@@ -26,7 +26,7 @@ class EntropyGenerator(threading.Thread):
             time.sleep(1)
             self.handle_bitstring()
         
-    def tick (self):
+    def tick(self):
         # This works like this:
         # time:   |------------|-------------|-----------|-----------|
         # tick 0: t0
@@ -48,30 +48,28 @@ class EntropyGenerator(threading.Thread):
                 self.bitstring += "1" if self.toggle else "0"
             elif d0 < d1:
                 self.bitstring += "0" if self.toggle else "1"
-            else: #d0 = d1
-                print ("Collision")
+            else:  # d0 = d1
+                print("Collision")
 
             self.toggle = not self.toggle
 
         else:
             self.t1 = datetime.datetime.now()
 
-
     def handle_bitstring(self):
         with open(self.outfile, "ab") as f:
-            while len(self.bitstring)>=8:
+            while len(self.bitstring) >= 8:
                 byte_bin = self.bitstring[:8]
                 self.bitstring = self.bitstring[8:]
-                byte_int = int(byte_bin,2)
+                byte_int = int(byte_bin, 2)
                 byte_hex = hex(byte_int)
                 byte_chr = chr(byte_int)
-                log.debug("new random byte:%s  %3d %4s %s"%(byte_bin,byte_int,
-                                        byte_hex,byte_chr))
+                log.debug("new random byte:%s  %3d %4s %s"%(byte_bin, byte_int,
+                                        byte_hex, byte_chr))
                 f.write(byte_chr)
 
-
 if __name__ == "__main__":
-    logging.basicConfig(level="DEBUG")
+    logging.basicConfig(level=logging.DEBUG)
     eg = EntropyGenerator("test.bin")
     while True:
         eg.tick()
