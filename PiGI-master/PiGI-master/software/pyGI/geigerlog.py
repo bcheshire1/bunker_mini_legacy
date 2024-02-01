@@ -20,7 +20,6 @@ def dt2unix(dt):
     return int(dt.strftime("%s"))
 
 def get_last_totalcount():
-
     log.info("Getting last totalcount")
     db = leveldb.LevelDB(cfg.get('db','path'))
     now = dt2unix(datetime.now())
@@ -28,18 +27,16 @@ def get_last_totalcount():
     last_entries_keys = []
     i = 0
 
-    # Check for an empty leveldb instance
+    # Check for empty leveldb instance
     try:
-        next(db.RangeIter(include_value=False))
+        next(iter(db.RangeIter(include_value=False)))
     except StopIteration:
         log.info("Empty LevelDB")
         return (0, 0)
 
     while not last_entries_keys:
-
         log.debug("Searching further (%d)..." % d)
-        last_entries_keys = list(db.RangeIter(key_from=str(now - d), include_value=False))
-
+        last_entries_keys = list(db.RangeIter(key_from=str(now-d), include_value=False))
         d = d * 2
         i = i + 1
 
@@ -148,8 +145,7 @@ class GeigerLog(threading.Thread):
                 break
             if step >= 1:
                 t_prev = start + delta_step * (step - 1)
-                annotation_keys = list(self.db_annotation.RangeIter(key_from=str(t_prev), key_to=str(t),
-                                                                     include_value=False))
+                annotation_keys = list(self.db_annotation.RangeIter(key_from=str(t_prev), key_to=str(t), include_value=False))
                 if annotation_keys:
                     for key in annotation_keys:
                         result.append(json.loads(self.db.Get(key)))
@@ -179,7 +175,7 @@ class GeigerLog(threading.Thread):
         if age:
             start = end - age
         elif start is None:
-            start = int(next(self.db.RangeIter(key_from="0", include_value=False)))
+            start = int(next(iter(self.db.RangeIter(key_from="0", include_value=False))))
 
         log.info("Fetching %s log entries from %d to %s" % (str(amount), start, end))
 
@@ -194,18 +190,18 @@ class GeigerLog(threading.Thread):
             entry_json = self.db.Get(key)
         except KeyError:
             try:
-                (key, entry_json) = next(self.db.RangeIter(key_from=str(int(ts))))
+                (key, entry_json) = next(iter(self.db.RangeIter(key_from=str(int(ts)))))
             except StopIteration:
-                log.ERROR("Annotation timestamp out of log range: %s" % key)
-                return
-        entry = json.loads(entry_json)
-        entry['annotation'] = text
-        entry_json = json.dumps(entry)
-        self.db.Put(key, entry_json)
-        if text:
-            self.db_annotation.Put(key, text)
-        else:
-            self.db_annotation.Delete(key)
+                        log.ERROR("Annotation timestamp out of log range: %s" % key)
+        return
+    entry = json.loads(entry_json)
+    entry['annotation'] = text
+    entry_json = json.dumps(entry)
+    self.db.Put(key, entry_json)
+    if text:
+        self.db_annotation.Put(key, text)
+    else:
+        self.db_annotation.Delete(key)
 
 def dummy_entry(timestamp, total, total_dtc):
     msg = {
@@ -228,3 +224,4 @@ def dummy_entry(timestamp, total, total_dtc):
 
 if __name__ == "__main__":
     print(get_last_totalcount())
+
