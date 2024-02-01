@@ -29,9 +29,9 @@ class Configurator():
                 self.static_conf.read_file(uuid_file)
             log.info("node uuid: %s" % self.static_conf.get('node', 'uuid'))
         except (IOError, configparser.NoOptionError, configparser.NoSectionError) as e:
-            log.warn("No uuid set!")
+            log.warning("No uuid set!")
             new_uuid = str(uuid.uuid1())
-            log.warn("Setting new uuid: %s" % new_uuid)
+            log.warning("Setting new uuid: %s" % new_uuid)
             self.static_conf = configparser.ConfigParser()
             self.static_conf.add_section('node')
             self.static_conf.set('node', 'uuid', new_uuid)
