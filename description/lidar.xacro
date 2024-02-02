@@ -46,7 +46,7 @@
                     <resolution>1</resolution>
                 </range>
             </ray>
-            <plugin name="laser_controller" filename="libgazebo_ros_ray_sensor.so">
+            <plugin name="laser_controller" filename="./src/bunker_mini/plugins/libgazebo_ros_ray_sensor.so">
                 <ros>
                     <argument>~/out:=scan</argument>
                 </ros>
