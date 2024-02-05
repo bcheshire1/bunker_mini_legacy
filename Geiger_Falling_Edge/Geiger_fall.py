@@ -33,6 +33,11 @@ try:
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             log_file.write(f"{timestamp} - Counts: {count}\n")
 
+        #Reset the count every x amount of seconds 
+        if count > 0:
+            print("Resetting count.")
+            count = 0
+
         # Wait for a while before logging again
         # Divide by value to get cps or times by different value to get cpm
         time.sleep(10)
