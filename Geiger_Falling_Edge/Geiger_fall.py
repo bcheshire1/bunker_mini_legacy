@@ -21,17 +21,20 @@ def falling_edge_callback(channel):
     print(f"Falling edge detected! Count: {count}")
 
 # Add falling edge detection event
-GPIO.add_event_detect(GEIGER_PIN, GPIO.FALLING, callback=falling_edge_callback, bouncetime=300) #Bounce time in milliseconds
+GPIO.add_event_detect(GEIGER_PIN, GPIO.FALLING, callback=falling_edge_callback, bouncetime=300) 
+#Bounce time in milliseconds - Used to avoid false triggering due noise
+#Trial with bounce time to just more than GMT dead time + recovery time 
 
 try:
     # Run the script indefinitely
     while True:
-        # Log counts to a file
+        # Log counts to a file with a time stamp
         with open("geiger_log.txt", "a") as log_file:
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             log_file.write(f"{timestamp} - Counts: {count}\n")
 
         # Wait for a while before logging again
+        # Divide by value to get cps or times by different value to get cpm
         time.sleep(10)
 
 except KeyboardInterrupt:
@@ -45,3 +48,5 @@ finally:
 #Detects falling edges w/ cumulative count
 #Speeds up when lantern close to window - def detecting radiation
 #needs to be tuned
+
+#Publish time stamp and counts to ROS topic
