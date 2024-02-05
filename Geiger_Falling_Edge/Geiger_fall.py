@@ -50,3 +50,4 @@ finally:
 #needs to be tuned
 
 #Publish time stamp and counts to ROS topic
+#RUN AS ROOT (SUDO) ON Pi TO ACCESS GPIO
